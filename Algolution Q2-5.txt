@@ -1,0 +1,158 @@
+#include <stdio.h>
+#define MAX 100000
+
+// Function to find the OR of all subarrays and then the OR of these results
+int findOROfSubarrays(int arr[], int n) {
+    int result = 0;
+
+    // Iterate through each element in the array
+    for (int i = 0; i < n; i++) {
+        // Initialize OR for current subarray
+        int currentOR = 0;
+
+        // Iterate through subarrays starting with arr[i]
+        for (int j = i; j < n; j++) {
+            currentOR |= arr[j]; // OR operation with current element
+            result |= currentOR; // OR operation with the result
+        }
+    }
+    return result;
+}
+
+int main() {
+    int N;
+    printf("Enter the number of elements in the array: ");
+    scanf("%d", &N);
+
+    int A[MAX];
+    printf("Enter the elements of the array:\n");
+    for (int i = 0; i < N; i++) {
+        scanf("%d", &A[i]);
+    }
+
+    int result = findOROfSubarrays(A, N);
+    printf("The OR of all subarrays is: %d\n", result);
+
+    return 0;
+}
+
+
+
+
+
+#include <stdio.h>
+
+void printKMax(int arr[], int n, int k) {
+    for (int i = 0; i <= n - k; i++) {
+        int max = arr[i];
+        for (int j = 1; j < k; j++) {
+            if (arr[i + j] > max)
+                max = arr[i + j];
+        }
+        printf("%d ", max);
+    }
+}
+
+int main() {
+    int arr1[] = {1, 2, 3, 1, 4, 5};
+    int k1 = 3;
+    int n1 = sizeof(arr1) / sizeof(arr1[0]);
+    printKMax(arr1, n1, k1);
+    printf("\n");
+
+    int arr2[] = {8, 5, 10, 7, 9, 4, 15, 12, 90, 13};
+    int k2 = 4;
+    int n2 = sizeof(arr2) / sizeof(arr2[0]);
+    printKMax(arr2, n2, k2);
+    printf("\n");
+
+    int arr3[] = {20, 10, 30};
+    int k3 = 1;
+    int n3 = sizeof(arr3) / sizeof(arr3[0]);
+    printKMax(arr3, n3, k3);
+    printf("\n");
+
+    return 0;
+}
+
+
+#include <stdio.h>
+#include <stdbool.h>
+#include <string.h>
+
+bool isValidString(char* s) {
+    int leftBalance = 0;
+    int starBalance = 0;
+    for (int i = 0; s[i]; i++) {
+        if (s[i] == '(') {
+            leftBalance++;
+            starBalance++;
+        } else if (s[i] == ')') {
+            leftBalance--;
+            starBalance--;
+        } else {
+            starBalance++;
+        }
+        if (leftBalance < 0) {
+            leftBalance = 0;
+        }
+        if (starBalance < 0) {
+            return false;
+        }
+    }
+    return leftBalance == 0;
+}
+
+int main() {
+    char s1[] = "()";
+    char s2[] = "(())";
+    char s3[] = ")(";
+    char s4[] = "()(";
+
+    printf("%d\n", isValidString(s1)); // true
+    printf("%d\n", isValidString(s2)); // true
+    printf("%d\n", isValidString(s3)); // false
+    printf("%d\n", isValidString(s4)); // false
+
+    return 0;
+}
+
+
+#include <stdio.h>
+#include <stdbool.h>
+#include <string.h>
+
+bool isValid(char* s) {
+    char stack[10000];
+    int top = -1;
+    for (int i = 0; s[i]; i++) {
+        if (s[i] == '(' || s[i] == '[' || s[i] == '{') {
+            stack[++top] = s[i];
+        } else {
+            if (top == -1)
+                return false;
+            if (s[i] == ')' && stack[top] != '(')
+                return false;
+            if (s[i] == ']' && stack[top] != '[')
+                return false;
+            if (s[i] == '}' && stack[top] != '{')
+                return false;
+            top--;
+        }
+    }
+    return top == -1;
+}
+
+int main() {
+    char s1[] = "()";
+    char s2[] = "()[]{}";
+    char s3[] = "(]";
+    char s4[] = "([])";
+
+    printf("%d\n", isValid(s1)); // true
+    printf("%d\n", isValid(s2)); // true
+    printf("%d\n", isValid(s3)); // false
+    printf("%d\n", isValid(s4)); // true
+
+    return 0;
+}
